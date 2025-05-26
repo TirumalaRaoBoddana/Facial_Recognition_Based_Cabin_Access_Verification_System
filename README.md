@@ -38,7 +38,7 @@ Before running the project, ensure you have the following installed:
 ## Installation
 1.  **Clone the repository** (if applicable, otherwise ensure all project files are in one directory):
     ```bash
-    git clone [https://github.com/TirumalaRaoBoddana/Facial_Recognition_Based_Cabin_Access_Verification_System](https://github.com/TirumalaRaoBoddana/Facial_Recognition_Based_Cabin_Access_Verification_System)
+    git clone https://github.com/TirumalaRaoBoddana/Facial_Recognition_Based_Cabin_Access_Verification_System
     cd facial_access_system
     ```
 
