@@ -1,22 +1,3 @@
-# Facial Recognition-Based Cabin Access Verification System
-
-## Project Description
-
-This project implements a real-time facial recognition system designed for access control. It utilizes a webcam feed to detect and recognize faces, comparing them against a database of authorized users. Based on the recognition, access is either granted or denied. The system also includes functionalities for registering new users and maintaining a log of all access attempts.
-
-## Features
-
-* **Real-time Face Detection & Recognition:** Identifies faces from a live webcam feed using `face_recognition` and OpenCV.
-* **Access Validation:** Compares detected faces against a local database of authorized users (`authorized_users.csv`) to grant or deny access.
-* **User Registration:** An admin can press 'A' during live access control (`access_control.py`) to register a new user by entering their name via the console and capturing their face from the webcam (webcam display is suppressed during capture).
-* **Access Logging:** Records every access attempt (Name, Timestamp, Status: Granted/Denied) in `access_log.csv`.
-* **Persistent Data Storage:** Uses CSV files (`authorized_users.csv`, `access_log.csv`) for storing user data and logs.
-* **Visual Feedback:** Displays bounding boxes around faces and status messages (Granted/Denied/Unknown) on the webcam feed.
-
-## Folder Structure
-Here's the updated README.md file, incorporating the specific NumPy version requirement and adding a crucial warning about potential compatibility issues.
-
-Markdown
 
 # Facial Recognition-Based Cabin Access Verification System
 
