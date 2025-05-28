@@ -17,20 +17,6 @@ This project implements a real-time facial recognition system designed for acces
 
 ---
 
-## Folder Structure
-
-facial_access_system/
-├── train/                    # Stores authorized user face images
-├── access_log.csv            # Log of all access attempts
-├── authorized_users.csv      # Database of registered users (Name + Encodings)
-├── add_user.py               # Script to add a new user
-├── access_control.py         # Main script for recognition & access
-├── report.pdf                # Summary of the work done
-├── presentation.pptx         # 3-5 slides showcasing functionality
-└── README.md                 # Instructions to run the project
-
----
-
 ## Prerequisites
 
 Before running the project, ensure you have the following:
