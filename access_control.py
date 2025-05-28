@@ -138,7 +138,7 @@ class FaceAccessControl:
                 face_names = []
                 for face_encoding in face_encodings:
                     name = "Unknown"
-                    access_status = "Denied"
+                    access_status = "Access Denied"
 
                     if self.authorized_face_encodings:
                         matches = face_recognition.compare_faces(self.authorized_face_encodings, face_encoding)
@@ -148,12 +148,12 @@ class FaceAccessControl:
                             best_match_index = np.argmin(face_distances)
                             if matches[best_match_index]:
                                 name = self.authorized_face_names[best_match_index]
-                                access_status = "Granted"
+                                access_status = "Access Granted"
 
                     face_names.append(name)
                     self._log_access(name, access_status)
                     self._set_display_message(f"Access: {access_status} for {name}",
-                                               color=(0, 255, 0) if access_status == "Granted" else (0, 0, 255))
+                                               color=(0, 255, 0) if access_status == "Access Granted" else (0, 0, 255))
 
             process_this_frame = not process_this_frame
 
@@ -198,39 +198,29 @@ class FaceAccessControl:
             cv2.putText(frame, text_q, (text_q_x, text_q_y), font_instructions, 0.7, outline_color_instructions, 3, cv2.LINE_AA)
             cv2.putText(frame, text_q, (text_q_x, text_q_y), font_instructions, 0.7, text_color_instructions, 1, cv2.LINE_AA)
             
-            cv2.imshow('Facial Recognition Access Control', frame)
+            cv2.imshow('Facial Recognition-Based Cabin Access Verification System', frame)
 
             key = cv2.waitKey(1) & 0xFF
             if key == ord('q'):
-                print("[INFO] Quitting Facial Recognition-Based Cabin Access Verification System")
+                print("[INFO] Quitting Access Control System.")
                 break
-            elif key == ord('a'): # Press 'A' to register a new user
+            elif key == ord('a'):  # Press 'A' to register a new user
                 print("\n[ADMIN] Initiating new user registration process...")
-                
-                # Release the current video capture and close its window
-                video_capture.release()
-                cv2.destroyAllWindows()
-                
-                # Call the register_user method from the UserRegistration instance
-                # This will handle the name input from console and background face capture
-                self.registrar.register_user()
-                
-                # Re-initialize the video capture for access control
-                video_capture = cv2.VideoCapture(0)
-                if not video_capture.isOpened():
-                    print("[FATAL ERROR] Could not re-access camera after registration. Please restart the script.")
-                    self.display_message = "Camera Error! Restart Needed."
-                    self.message_color = (0, 0, 255) # Red
-                    time.sleep(5) # Give user time to read error
-                    break # Exit if camera cannot be re-opened
 
-                # Re-create the main access control window
-                cv2.namedWindow('Facial Recognition Access Control', cv2.WINDOW_NORMAL) 
-                
-                # Reload authorized users to include the new one
+                # Capture the current frame (no need to release the camera)
+                ret, frame = video_capture.read()
+                if not ret:
+                    print("[ERROR] Failed to capture frame for registration.")
+                    continue
+
+                # Pass the frame directly to the registrar
+                self.registrar.register_user(frame)  # frame is passed without closing webcam
+
+                # Confirmation message
+                self._set_display_message("Registration Process Completed", (0, 255, 255))  # Cyan
+
+                # Reload authorized users if needed
                 self._load_authorized_users()
-                # Set display message to confirm registration attempt
-                self._set_display_message("Registration Process Completed", (0, 255, 255)) # Cyan message
 
         video_capture.release()
         cv2.destroyAllWindows()
